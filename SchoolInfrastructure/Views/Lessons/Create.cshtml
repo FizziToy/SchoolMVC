@@ -1,0 +1,65 @@
+﻿@model SchoolDomain.Model.Lesson
+
+@{
+    ViewData["Title"] = "Додати новий урок";
+}
+
+<h1>Додавання нового уроку</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8 mx-auto rounded border p-3">
+        <h2 class="text-center mb-5">Новий урок</h2>
+
+        <form asp-action="Create" asp-controller="Lessons" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CourseId" />
+           
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Назва уроку</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Опис</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="Description" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Дата</label>
+                <div class="col-sm-8">
+                    <input type="date" class="form-control" asp-for="Date" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Вчитель</label>
+                <div class="col-sm-8">
+                    <select class="form-control" asp-for="TeacherId" asp-items="ViewBag.TeacherId"></select>
+                    <span asp-validation-for="TeacherId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Додати</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    <a class="btn btn-outline-primary" asp-controller="Lessons" asp-action="Index" asp-route-courseId=@Model.CourseId role="button">Скасувати</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
